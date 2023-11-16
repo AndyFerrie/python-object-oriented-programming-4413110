@@ -5,42 +5,63 @@
 # The subclasses are required to override the magic method
 # that makes them sortable
 
-class Asset():
-    pass
-    
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
+
+@dataclass
+class Asset(ABC):
+    price: float
+
+    @abstractmethod
+    def __lt__(self, other):
+        pass
+
+
+@dataclass
 class Stock(Asset):
-    pass
+    ticker: str
+    company: str
+
+    def __lt__(self, other):
+        return self.price < other.price
 
 
+@dataclass
 class Bond(Asset):
-    pass
+    description: str
+    duration: int
+    yieldamt: float
+
+    def __lt__(self, other):
+        return self.yieldamt < other.yieldamt
+
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~
 stocks = [
-    Stock("MSFT", 342.0, "Microsoft Corp"),
-    Stock("GOOG", 135.0, "Google Inc"),
-    Stock("META", 275.0, "Meta Platforms Inc"),
-    Stock("AMZN", 120.0, "Amazon Inc")
+    Stock(342.0, "MSFT", "Microsoft Corp"),
+    Stock(135.0, "GOOG", "Google Inc"),
+    Stock(275.0, "META", "Meta Platforms Inc"),
+    Stock(120.0, "AMZN", "Amazon Inc"),
 ]
 
 bonds = [
     Bond(95.31, "30 Year US Treasury", 30, 4.38),
     Bond(96.70, "10 Year US Treasury", 10, 4.28),
     Bond(98.65, "5 Year US Treasury", 5, 4.43),
-    Bond(99.57, "2 Year US Treasury", 2, 4.98)
+    Bond(99.57, "2 Year US Treasury", 2, 4.98),
 ]
 
 try:
-   ast = Asset(100.0)
+    ast = Asset(100.0)
 except:
-   print("Can't instantiate Asset!")
+    print("Can't instantiate Asset!")
 
 stocks.sort()
 bonds.sort()
 
 for stock in stocks:
-   print(stock)
+    print(stock)
 print("-----------")
 for bond in bonds:
-   print(bond)
+    print(bond)
