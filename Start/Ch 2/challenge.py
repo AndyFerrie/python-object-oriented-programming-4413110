@@ -49,10 +49,6 @@ class Bond(Asset):
 
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~
-try:
-    ast = Asset(100.0)
-except:
-    print("Can't instantiate Asset!")
 
 msft = Stock("MSFT", 342.0, "Microsoft Corp")
 goog = Stock("GOOG", 135.0, "Google Inc")
